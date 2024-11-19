@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.*;
-
+import jakarta.validation.constraints.*;
 @Entity
 public class Aluno {
 	@Id
@@ -13,20 +13,21 @@ public class Aluno {
 	private Long id;
 
 	private String nome;
+
+	@NotNull(message = "O email não pode ser nulo")
+	@NotEmpty(message = "O email não pode ser vazio")
+	@Email(message = "O email deve ter um formato válido")
 	private String email;
 
 	@Temporal(TemporalType.DATE)
 	private LocalDate dataCadastro;
 
 	@ManyToMany
-	@JoinTable(
-	    name = "aluno_curso",
-	    joinColumns = @JoinColumn(name = "aluno_id"),
-	    inverseJoinColumns = @JoinColumn(name = "curso_id")
-	)
+	@JoinTable(name = "aluno_curso", joinColumns = @JoinColumn(name = "aluno_id"), inverseJoinColumns = @JoinColumn(name = "curso_id"))
 	private List<Curso> cursos = new ArrayList<>();
 
-	public Aluno() {}
+	public Aluno() {
+	}
 
 	public Long getId() {
 		return id;
@@ -67,6 +68,5 @@ public class Aluno {
 	public void setCursos(List<Curso> cursos) {
 		this.cursos = cursos;
 	}
-	
-	
+
 }
