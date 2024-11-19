@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
 @Entity
 public class Curso {
@@ -12,7 +13,12 @@ public class Curso {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@NotNull(message = "O nome não pode ser nulo")
+	@NotEmpty(message = "O nome não pode ser vazio")
 	private String nome;
+	
+	@NotNull(message = "A descrição não pode ser nulo")
+	@NotEmpty(message = "A descrição não pode ser vazio")
 	private String descricao;
 
 	@Temporal(TemporalType.DATE)
